@@ -12,10 +12,44 @@ body {
   line-height: 1.5;
 }
 
-#search-box {
+.search-form {
   font: inherit;
   padding: 8px;
-  max-width: 320px;
   margin-bottom: 16px;
+  text-align: center;
+    
 }
 
+.gallery{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+img{
+  width: 100%;
+  display: block;
+}
+.photo-card{
+  width: calc((100% - 60px)/4);
+  box-shadow: 0 6px 8px #c4b59d, 0 -2px 1px #fff;
+}
+
+.info{
+  display: flex;
+  gap: 20px;
+  padding: 5px;
+  background-color: beige;
+}
+
+.info-item{
+  display: flex;
+  flex-direction: column;
+  gap:5px;
+  align-items: center;
+}
+
+.load-more{
+  margin-top: 16px;
+  margin-left: 655px;
+}
