@@ -47,6 +47,7 @@ img{
   flex-direction: column;
   gap:5px;
   align-items: center;
+  font-size: 14px;
 }
 
 .load-more{
