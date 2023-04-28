@@ -41,8 +41,9 @@ function onSearch(event){
           //     Notify.failure("We're sorry, but you've reached the end of search results.")
             
           // }
-        page+=1,container.insertAdjacentHTML('beforeend', createMarkcup(data.hits)),
-        Notify.success(`Hooray! We found ${data.totalHits} images.`),
+    page += 1, container.insertAdjacentHTML('beforeend', createMarkcup(data.hits)),
+      Notify.success(`Hooray! We found ${data.totalHits} images.`),
+      lightbox.refresh(),
       
         (console.log(data.totalHits))
         
@@ -71,7 +72,8 @@ function onLoadMore() {
   getPictures(input).then(data => {
    
     page += 1, container.insertAdjacentHTML('beforeend', createMarkcup(data.hits));
-    loadMore.hidden=false;
+    loadMore.hidden = false;
+    lightbox.refresh()
            if (data.hits.length<40) {
              loadMore.hidden = true;
              Notify.failure("We're sorry, but you've reached the end of search results.")
@@ -111,11 +113,12 @@ function resetPage() {
       page=1
 }
 
-
 container.addEventListener('click', onClickGallery)
- 
+
+
 function onClickGallery(event) {
   event.preventDefault()
 }
-
-    new SimpleLightbox('.gallery a', { animationSpeed:250})
+let lightbox = new SimpleLightbox('.gallery a',)
+    
+// 
