@@ -33,6 +33,7 @@ img{
 .photo-card{
   width: calc((100% - 60px)/4);
   box-shadow: 0 6px 8px #c4b59d, 0 -2px 1px #fff;
+  
 }
 
 .info{
@@ -50,7 +51,6 @@ img{
   font-size: 14px;
 }
 
-.load-more{
-  margin-top: 16px;
-  margin-left: 655px;
-}
+/* .load-more{
+    visibility: hidden;
+} */

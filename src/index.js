@@ -7,30 +7,39 @@ const container=document.querySelector('.gallery')
 const loadMore=document.querySelector('.load-more')
 loadMore.addEventListener('click', onLoadMore)
 
-let page=1
+let page = 1;
+
 let input=''
 loadMore.hidden=true;
 
 function onSearch(event){
     event.preventDefault();
-    container.innerHTML='';
-    input = event.currentTarget.elements.searchQuery.value.trim();
+  container.innerHTML = '';
+  loadMore.hidden=true;
+  input = event.currentTarget.elements.searchQuery.value.trim();
+  resetPage()
      if(!input){
         container.innerHTML='';
-       loadMore.hidden = true;
+     
         Notify.failure('Sorry, there are no images matching your search query. Please try again.');
         return;
-     }
-        getPictures(input).then(data=>{
+  }
+  
+  getPictures(input).then(data => {
+          console.log(data)
         if(data.hits.length===0){
-            container.innerHTML='';
+          container.innerHTML = '';
+          loadMore.hidden=true;
              Notify.failure('Sorry, there are no images matching your search query. Please try again.');
              return;
           }
-       
+          loadMore.hidden=false;
+           if (data.hits.length<40) {
+           loadMore.hidden=true;
+          }
         page+=1,container.insertAdjacentHTML('beforeend', createMarkcup(data.hits)),
         Notify.success(`Hooray! We found ${data.totalHits} images.`),
-        loadMore.hidden=false;
+      
         (console.log(data.totalHits))
         
     })
@@ -53,18 +62,26 @@ throw new Error(resp.statusText)
 })
 
 }
-function onLoadMore(){
+function onLoadMore() {
+
   getPictures(input).then(data => {
-    
-    page += 1, container.insertAdjacentHTML('beforeend', createMarkcup(data.hits));
    
-    
-    console.log(page)}).catch(error=>console.log(error))
+    page += 1, container.insertAdjacentHTML('beforeend', createMarkcup(data.hits));
+    loadMore.hidden=false;
+           if (data.hits.length<40) {
+           loadMore.hidden=true;
+    }
+     
+          
+  
+    console.log(page)}).catch(error=>error)
     
 }
 
-function createMarkcup (arr){
-    return arr.map(({webformatURL,tags,likes,views,comments,downloads})=>`<div class="photo-card">
+function createMarkcup(arr) {
+ 
+  return arr.map(({ webformatURL, tags, likes, views, comments, downloads }) => 
+     `<div class="photo-card">
     <img src="${webformatURL}" alt="${tags}" loading="lazy" height="200px" />
     <div class="info">
       <p class="info-item">
@@ -80,6 +97,10 @@ function createMarkcup (arr){
         <b>Downloads</b>${downloads}
       </p>
     </div>
-    </div>`).join('')
+    </div>`
+  ).join('')
     }
     
+function resetPage() {
+      page=1
+    }
