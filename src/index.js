@@ -1,5 +1,7 @@
 import './css/styles.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';;
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 const form = document.querySelector('#search-form')
 form.addEventListener('submit', onSearch)
@@ -34,9 +36,11 @@ function onSearch(event){
              return;
           }
           loadMore.hidden=false;
-           if (data.hits.length<40) {
-           loadMore.hidden=true;
-          }
+          //  if (data.hits.length<40) {
+          //    loadMore.hidden = true;
+          //     Notify.failure("We're sorry, but you've reached the end of search results.")
+            
+          // }
         page+=1,container.insertAdjacentHTML('beforeend', createMarkcup(data.hits)),
         Notify.success(`Hooray! We found ${data.totalHits} images.`),
       
@@ -69,7 +73,8 @@ function onLoadMore() {
     page += 1, container.insertAdjacentHTML('beforeend', createMarkcup(data.hits));
     loadMore.hidden=false;
            if (data.hits.length<40) {
-           loadMore.hidden=true;
+             loadMore.hidden = true;
+             Notify.failure("We're sorry, but you've reached the end of search results.")
     }
      
           
@@ -80,9 +85,10 @@ function onLoadMore() {
 
 function createMarkcup(arr) {
  
-  return arr.map(({ webformatURL, tags, likes, views, comments, downloads }) => 
+  return arr.map(({ largeImageURL,webformatURL, tags, likes, views, comments, downloads }) => 
      `<div class="photo-card">
-    <img src="${webformatURL}" alt="${tags}" loading="lazy" height="200px" />
+     <a href="${largeImageURL}">
+    <img src="${webformatURL}" alt="${tags}" loading="lazy" height="200px" /></a>
     <div class="info">
       <p class="info-item">
         <b>Likes</b> ${likes}
@@ -103,4 +109,13 @@ function createMarkcup(arr) {
     
 function resetPage() {
       page=1
-    }
+}
+
+
+container.addEventListener('click', onClickGallery)
+ 
+function onClickGallery(event) {
+  event.preventDefault()
+}
+
+    new SimpleLightbox('.gallery a', { animationSpeed:250})
