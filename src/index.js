@@ -10,7 +10,7 @@ const loadMore=document.querySelector('.load-more')
 loadMore.addEventListener('click', onLoadMore)
 
 let page = 1;
-
+let limitPage=14
 let input=''
 loadMore.hidden=true;
 
@@ -36,11 +36,9 @@ function onSearch(event){
              return;
           }
           loadMore.hidden=false;
-          //  if (data.hits.length<40) {
-          //    loadMore.hidden = true;
-          //     Notify.failure("We're sorry, but you've reached the end of search results.")
-            
-          // }
+          if (limitPage === page) {
+      loadMore.hidden = true;
+    }
     page += 1, container.insertAdjacentHTML('beforeend', createMarkcup(data.hits)),
       Notify.success(`Hooray! We found ${data.totalHits} images.`),
       lightbox.refresh(),
@@ -77,6 +75,9 @@ function onLoadMore() {
            if (data.hits.length<40) {
              loadMore.hidden = true;
              Notify.failure("We're sorry, but you've reached the end of search results.")
+    }
+    if (limitPage === page) {
+      loadMore.hidden = true;
     }
      
           
