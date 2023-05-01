@@ -72,7 +72,7 @@ function onPagination(entries, observer) {
         
         lightbox.refresh();
           if (limitPage === currentPage || data.hits.length < 40) {
-            
+              observer.unobserve(guard);
           Notify.info("We're sorry, but you've reached the end of search results.")
         }
       });
