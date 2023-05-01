@@ -64,13 +64,15 @@ function onSearch(event){
 function onPagination(entries, observer) {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      currentPage += 1;
+    
       scroll();
-      getPictures(input, currentPage).then(data => {
+        getPictures(input, currentPage).then(data => {
+          
         container.insertAdjacentHTML('beforeend', createMarkcup(data.hits));
-        // Notify.success(`Hooray! We found ${data.totalHits} images.`);
+        
         lightbox.refresh();
-        if (limitPage === currentPage || data.hits.length < 40) {
+          if (limitPage === currentPage || data.hits.length < 40) {
+            scroll();
           Notify.info("We're sorry, but you've reached the end of search results.")
         }
       });
