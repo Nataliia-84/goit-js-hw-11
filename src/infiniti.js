@@ -67,7 +67,7 @@ function onPagination(entries, observer) {
     
       scroll();
         getPictures(input, currentPage).then(data => {
-          
+          currentPage += 1;
         container.insertAdjacentHTML('beforeend', createMarkcup(data.hits));
         
         lightbox.refresh();
