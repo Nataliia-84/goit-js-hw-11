@@ -1,7 +1,6 @@
 import './css/styles.css';
 import { getPictures, limitPage } from './servise/api';
 import { createMarkcup } from './modules/marckup';
-import { scroll } from './modules/scroll';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
@@ -65,7 +64,6 @@ function onPagination(entries, observer) {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
     
-      scroll();
         getPictures(input, currentPage).then(data => {
           currentPage += 1;
         container.insertAdjacentHTML('beforeend', createMarkcup(data.hits));
