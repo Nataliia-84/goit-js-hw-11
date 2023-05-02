@@ -1,6 +1,7 @@
 import './css/styles.css';
 import { getPictures, limitPage } from './servise/api';
 import { createMarkcup } from './modules/marckup';
+import { scroll } from './modules/scroll';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';;
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
@@ -27,7 +28,8 @@ let lightbox = new SimpleLightbox('.gallery a', { animationSpeed: 250, captionsD
 function onSearch(event){
     event.preventDefault();
     container.innerHTML = '';
-    loadMore.hidden=true;
+  loadMore.hidden = true;
+  loadMore.style.display = "none";
     input = event.currentTarget.elements.searchQuery.value.trim();
     currentPage = 1;
   if(!input){
@@ -45,19 +47,20 @@ function onSearch(event){
     }
             
   if (limitPage === currentPage || data.hits.length<40) {
-         
+         loadMore.hidden=true;
           loadMore.style.display = "none";
           Notify.info("We're sorry, but you've reached the end of search results.")
     }
     
-    loadMore.hidden = false;
+       loadMore.hidden = false;
+       loadMore.style.display = "block";
     currentPage += 1;
        container.insertAdjacentHTML('beforeend', createMarkcup(data.hits)),
          Notify.success(`Hooray! We found ${data.totalHits} images.`),
         
     lightbox.refresh();
-              
-    }
+    }         
+    
   )
   .catch(error=>console.log(error))   
 }
@@ -66,15 +69,18 @@ function onSearch(event){
 function onLoadMore() {
 
   getPictures(input, currentPage).then(data => {
-    loadMore.hidden = false;
+         loadMore.hidden = false;
+   loadMore.style.display = "block";
     currentPage += 1;
     container.insertAdjacentHTML('beforeend', createMarkcup(data.hits));
     lightbox.refresh();
-    
+    scroll();
     if (limitPage === currentPage || data.hits.length < 40) {
       loadMore.style.display = "none";
       Notify.info("We're sorry, but you've reached the end of search results.")
     }
+   
+    
   }
   )
     .catch(err => {

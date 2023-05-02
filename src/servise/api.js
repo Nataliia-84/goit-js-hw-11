@@ -16,8 +16,8 @@ export async function getPictures(pictureName,page=1){
         per_page: per_page,
         page:page,
     })
-    // const URL = `${BASE_URL}?key=35723548-55cce6d92fe2b0376e8aa06a2&q=${pictureName}
-    // &image_type="photo"&orientation="horizontal"&safesearch="true"&per_page=${per_page}&page=${page}`;
+    // const URL = `https://pixabay.com/api/?key=35723548-55cce6d92fe2b0376e8aa06a2&q=${pictureName}
+    // &image_type=photo&orientation=horizontal&safesearch=true&per_page=${per_page}&page=${page}`;
   
     try {
       const response = await axios.get(`${BASE_URL}?${params}`);
