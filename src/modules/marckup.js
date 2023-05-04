@@ -1,10 +1,12 @@
 export function createMarkcup(arr) {
  
   return arr.map(({ largeImageURL,webformatURL, tags, likes, views, comments, downloads }) => 
-     `<div class="photo-card">
-     <a class="photo-link" href="${largeImageURL}">
-    <img src="${webformatURL}" alt="${tags}" loading="lazy" height="200px" /></a>
-    <div class="info">
+     `<ul class="photo-card">
+     <li class="photo-card__item">
+     <div class="photo-thumb"><a href="${largeImageURL}">
+    <img class="image" src="${webformatURL}" alt="${tags}" loading="lazy"/></a>
+    </div>
+      <div class="info">
       <p class="info-item">
         <b>Likes</b> ${likes}
       </p>
@@ -18,6 +20,7 @@ export function createMarkcup(arr) {
         <b>Downloads</b>${downloads}
       </p>
     </div>
-    </div>`
+    </li>
+    </ul>`
   ).join('')
-    }
+}
