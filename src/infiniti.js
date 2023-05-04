@@ -17,7 +17,7 @@ form.addEventListener('submit', onSearch);
 container.addEventListener('click', onClickGallery)
 
 
-let currentPage = 1;
+let currentPage=1;
 let input = '';
 
 const options = {
@@ -32,7 +32,7 @@ function onSearch(event){
     event.preventDefault();
     container.innerHTML = '';
     input = event.currentTarget.elements.searchQuery.value.trim();
-    currentPage = 1;
+    currentPage=1;
   if(!input){
         container.innerHTML='';
         Notify.failure('Sorry, there are no images matching your search query. Please try again.');
@@ -46,12 +46,15 @@ function onSearch(event){
           return;
          };
               
-         currentPage += 1;
-         container.insertAdjacentHTML('beforeend', createMarkcup(data.hits)),
-         Notify.success(`Hooray! We found ${data.totalHits} images.`),
-         observer.observe(guard);
+      if (data.hits.length<40) {
+            
+          Notify.info("We're sorry, but you've reached the end of search results.")
+       };
+       container.insertAdjacentHTML('beforeend', createMarkcup(data.hits));
+       Notify.success(`Hooray! We found ${data.totalHits} images.`);
+           observer.observe(guard);
          lightbox.refresh();
-              
+       
     }
   )
   .catch(error=>console.log(error))   
@@ -61,17 +64,26 @@ function onSearch(event){
 
 
 function onPagination(entries, observer) {
+  
+  console.log(entries)
   entries.forEach((entry) => {
+  
     if (entry.isIntersecting) {
-    
-        getPictures(input, currentPage).then(data => {
-          currentPage += 1;
+    currentPage += 1;
+      getPictures(input, currentPage).then(data => {
+        
         container.insertAdjacentHTML('beforeend', createMarkcup(data.hits));
         
         lightbox.refresh();
-          if (limitPage === currentPage || data.hits.length < 40) {
+     
+        if (limitPage === currentPage) {
+            
               observer.unobserve(guard);
           Notify.info("We're sorry, but you've reached the end of search results.")
+        }
+        if (!input) {
+            container.innerHTML = '';
+            return;
         }
       });
     }
