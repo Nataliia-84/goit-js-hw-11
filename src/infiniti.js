@@ -14,8 +14,6 @@ const guard=document.querySelector('.guard')
 
 form.addEventListener('submit', onSearch);
 
-container.addEventListener('click', onClickGallery)
-
 
 let currentPage=1;
 let input = '';
@@ -90,10 +88,6 @@ function onPagination(entries, observer) {
 }
 
 
-
-function onClickGallery(event) {
-  event.preventDefault()
-}
 
 
 
