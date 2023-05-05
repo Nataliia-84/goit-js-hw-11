@@ -32,7 +32,8 @@ function onSearch(event){
     event.preventDefault();
     container.innerHTML = '';
     input = event.currentTarget.elements.searchQuery.value.trim();
-    currentPage=1;
+  currentPage = 1;
+  observer.unobserve(guard);
   if(!input){
         container.innerHTML='';
         Notify.failure('Sorry, there are no images matching your search query. Please try again.');
@@ -81,10 +82,7 @@ function onPagination(entries, observer) {
               observer.unobserve(guard);
           Notify.info("We're sorry, but you've reached the end of search results.")
         }
-        if (!input) {
-            container.innerHTML = '';
-            return;
-        }
+        
       });
     }
     
