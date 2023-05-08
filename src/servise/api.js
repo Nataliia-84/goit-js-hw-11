@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 export let per_page = 40;
-export let limitPage = 0;
+export let limitPage = 1;
 export async function getPictures(pictureName,page){
     const BASE_URL = 'https://pixabay.com/api/'; 
     const API_KEY='35723548-55cce6d92fe2b0376e8aa06a2';
@@ -23,7 +23,7 @@ export async function getPictures(pictureName,page){
       const response = await axios.get(`${BASE_URL}?${params}`);
     // const response = await axios.get(URL);
       const { data } = response;
-      limitPage = Math.round(data.totalHits / per_page);
+      limitPage = Math.ceil(data.totalHits / per_page);
       console.log(limitPage);
     return data;
   }

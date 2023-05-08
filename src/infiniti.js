@@ -49,11 +49,16 @@ function onSearch(event){
             
           Notify.info("We're sorry, but you've reached the end of search results.")
        };
-       container.insertAdjacentHTML('beforeend', createMarkcup(data.hits));
-       Notify.success(`Hooray! We found ${data.totalHits} images.`);
-           observer.observe(guard);
+       if (currentPage !== limitPage) {
+          observer.observe(guard);
+       }
+      
+         container.innerHTML = '';
+         container.insertAdjacentHTML('beforeend', createMarkcup(data.hits));
+         Notify.success(`Hooray! We found ${data.totalHits} images.`);
+          
          lightbox.refresh();
-       
+      
     }
   )
   .catch(error=>console.log(error))   
@@ -77,11 +82,11 @@ function onPagination(entries, observer) {
      
         if (limitPage === currentPage) {
             
-              observer.unobserve(guard);
+          observer.unobserve(guard);
           Notify.info("We're sorry, but you've reached the end of search results.")
         }
         
-      });
+      }).catch(err => console.log(err));
     }
     
   });
